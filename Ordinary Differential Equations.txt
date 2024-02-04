@@ -1,0 +1,16 @@
+import numpy as np
+
+def fft_recursive(x):
+    N = len(x)
+    if N <= 1:
+        return x
+    even = fft_recursive(x[0::2])
+    odd = fft_recursive(x[1::2])
+    factor = np.exp(-2j * np.pi / N)
+    return np.concatenate([even + factor**k * odd for k in range(N//2)])
+
+# Example usage
+signal = np.array([1, 2, 3, 4])
+fft_result = fft_recursive(signal)
+print("FFT of the signal:", fft_result)
+
